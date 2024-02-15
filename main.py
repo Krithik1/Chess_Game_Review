@@ -2,46 +2,53 @@ import chess
 import chess.engine
 import chess.pgn
 import chess.svg
-from flask import Flask, redirect, render_template, url_for
+from flask import Flask, render_template
 
 from getGames import get_games
 
 app = Flask("testapp")
 svgs = []
+games = []
+curr_game = None
 move = 0
-
-
-def main():
-    games = get_games("username")
-    print(games[0])
-    print(games[0]["moves"])
-    print(games[0]["termination"])
-    print(games[0]["result"])
-    print(games[0]["white"])
-    print(games[0]["black"])
-    print(games[0]["date"])
-    print(games[0]["whiteRating"])
-    print(games[0]["blackRating"])
-    print(games[0]["index"])
-    global svgs
-    board = chess.Board()
-    svgs.append(board._repr_svg_())
-    for move in games[0]["moves"]:
-        board.push_san(move)
-        svgs.append(board._repr_svg_())
-    return svgs[0]
-
-
-variable = main()
+variable = None
 
 
 @app.route("/")
 def index():
+    return render_template("home.html")
+
+
+@app.route("/games/<username>/<year>/<month>")
+def games(username, year, month):
+    global games
+    games = get_games(username, year, month)
+    return render_template("games.html", games=games, username=username)
+
+
+@app.route("/game/<index>")
+def game(index):
+    global svgs
+    global variable
+    global move
+    global games
+    global curr_game
+    for game in games:
+        if game["index"] == int(index):
+            curr_game = game
+            break
+    board = chess.Board()
+    svgs = [board._repr_svg_()]
+    for move in curr_game["moves"]:
+        board.push_san(move)
+        svgs.append(board._repr_svg_())
+    move = 0
+    variable = svgs[move]
     return render_template("index.html", variable=variable)
 
 
-@app.route("/next")
-def next():
+@app.route("/game/<index>/next")
+def next(index):
     global svgs
     global move
     global variable
@@ -52,8 +59,8 @@ def next():
     return render_template("index.html", variable=variable)
 
 
-@app.route("/prev")
-def prev():
+@app.route("/game/<index>/prev")
+def prev(index):
     global svgs
     global move
     global variable

@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>{{username}}</h2>
+    <table>
+        <tr>
+            <th>White (White Rating)</th>
+            <th>Black (Black Rating)</th>
+            <th>Result</th>
+            <th>Game Date</th>
+            <th>Select button</th>
+        </tr>
+        {% for game in games %}
+        <tr>
+            <td>{{game.white}} ({{game.whiteRating}})</td>
+            <td>{{game.black}} ({{game.blackRating}})</td>
+            <td>{{game.result}}</td>
+            <td>{{game.date}}</td>
+            <td><a href="/game/{{game.index}}">Select</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

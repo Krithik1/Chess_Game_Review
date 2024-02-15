@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,10 +10,20 @@
     <button id="prev">Previous</button>
     <script>
         document.getElementById('next').addEventListener('click', function() {
-            window.location.href = "/next";
+            temp = window.location.href
+            if (window.location.href.includes("next") || window.location.href.includes("prev")) {
+                temp = temp.replace("/prev", "");
+                temp = temp.replace("/next", "");
+            }
+            window.location.href = temp + "/next";
         });
         document.getElementById('prev').addEventListener('click', function() {
-            window.location.href = "/prev";
+            temp = window.location.href
+            if (window.location.href.includes("prev") || window.location.href.includes("next")) {
+                temp = temp.replace("/prev", "");
+                temp = temp.replace("/next", "");
+            }
+            window.location.href = temp + "/prev";
         });
     </script>
 </body>

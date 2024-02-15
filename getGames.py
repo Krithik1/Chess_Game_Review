@@ -7,10 +7,10 @@ Client.request_config["headers"]["User-Agent"] = (
 )
 
 
-def get_games(username):
-    data = get_player_games_by_month_pgn(username, year=2024, month=2).json["pgn"][
-        "pgn"
-    ]
+def get_games(username, year, month):
+    data = get_player_games_by_month_pgn(
+        username, year=int(year), month=int(month)
+    ).json["pgn"]["pgn"]
     data = data.split('[Event "Live Chess"]')[1:]
     games = []
     for game in data:
