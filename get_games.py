@@ -20,7 +20,9 @@ def get_games(username, year, month):
     Returns:
         list: The list of games for the given user, year, and month.
     """
-    data = get_player_games_by_month_pgn(username, year=int(year), month=int(month))
+    year = int(year)
+    month = int(month)
+    data = get_player_games_by_month_pgn(username, year=year, month=month)
     data = data.json["pgn"]["pgn"]  # pylint: disable=maybe-no-member
     data = data.split('[Event "Live Chess"]')[1:]
     games = []
