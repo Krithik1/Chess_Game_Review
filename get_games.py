@@ -9,7 +9,7 @@ Client.request_config["headers"][
 ] = "My Python Application. Contact me at email@example.com"
 
 
-def get_games(username, year, month):
+def get_games(username, year, mont):
     """Get the games for a given user, year, and month.
 
     Args:
