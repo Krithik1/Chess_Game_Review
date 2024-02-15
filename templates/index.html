@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span id="variable">{{ variable | safe}}</span>
+    <button id="next">Next</button>
+    <button id="prev">Previous</button>
+    <script>
+        document.getElementById('next').addEventListener('click', function() {
+            window.location.href = "/next";
+        });
+        document.getElementById('prev').addEventListener('click', function() {
+            window.location.href = "/prev";
+        });
+    </script>
+</body>
+</html>
