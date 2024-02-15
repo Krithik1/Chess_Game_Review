@@ -5,7 +5,7 @@
     <title>Document</title>
 </head>
 <body>
-    <span id="variable">{{ variable | safe}}</span>
+    <span id="variable" style="width: 100px; height: 100px;">{{ variable | safe}}</span>
     <button id="next">Next</button>
     <button id="prev">Previous</button>
     <script>
@@ -25,6 +25,7 @@
             }
             window.location.href = temp + "/prev";
         });
+        document.getElementsByTagName('svg')[0].setAttribute('style', 'width: 30em; height: 30em;');
     </script>
 </body>
 </html>
