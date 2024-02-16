@@ -16,9 +16,11 @@ class GameState:
 
     def __init__(self):
         self.svgs = []
+        self.svgs_flip = []
         self.games = []
         self.curr_game = None
         self.move = 0
+        self.flip = False  # False for white, True for black
         self.variable = None
 
     def find_curr_game(self, idx):
@@ -40,9 +42,19 @@ class GameState:
         """
         board = chess.Board()
         self.svgs = [chess.svg.board(board)]
+        self.svgs_flip = [chess.svg.board(board, flipped=True)]
         for move in self.curr_game["moves"]:
             board.push_san(move)
             self.svgs.append(chess.svg.board(board))
+            self.svgs_flip.append(chess.svg.board(board, flipped=True))
+
+    def flip_board(self):
+        """Flip the board."""
+        self.flip = not self.flip
+        if self.flip:
+            self.variable = self.svgs_flip[self.move]
+        else:
+            self.variable = self.svgs[self.move]
 
 
 state = GameState()
@@ -98,10 +110,12 @@ def next_move(idx):
     Returns:
         str: The rendered HTML of the game page.
     """
-    print(idx)
     state.move += 1
     state.move = min(len(state.svgs) - 1, state.move)
-    state.variable = state.svgs[state.move]
+    if state.flip:
+        state.variable = state.svgs_flip[state.move]
+    else:
+        state.variable = state.svgs[state.move]
     return render_template("index.html", variable=state.variable)
 
 
@@ -112,10 +126,23 @@ def prev_move(idx):
     Returns:
         str: The rendered HTML of the game page.
     """
-    print(idx)
     state.move -= 1
     state.move = max(0, state.move)
-    state.variable = state.svgs[state.move]
+    if state.flip:
+        state.variable = state.svgs_flip[state.move]
+    else:
+        state.variable = state.svgs[state.move]
+    return render_template("index.html", variable=state.variable)
+
+
+@app.route("/game/<idx>/flip")
+def flip(idx):
+    """Flip the board.
+
+    Returns:
+        str: The rendered HTML of the home page.
+    """
+    state.flip_board()
     return render_template("index.html", variable=state.variable)
 
 
