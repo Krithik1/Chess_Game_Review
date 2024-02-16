@@ -6,24 +6,36 @@
 </head>
 <body>
     <span id="variable" style="width: 100px; height: 100px;">{{ variable | safe}}</span>
+    <button id="flip">Flip</button>
     <button id="next">Next</button>
     <button id="prev">Previous</button>
     <script>
         document.getElementById('next').addEventListener('click', function() {
-            temp = window.location.href
-            if (window.location.href.includes("next") || window.location.href.includes("prev")) {
+            temp = window.location.href;
+            if (window.location.href.includes("next") || window.location.href.includes("prev") || window.location.href.includes("flip")) {
                 temp = temp.replace("/prev", "");
                 temp = temp.replace("/next", "");
+                temp = temp.replace("/flip", "");
             }
             window.location.href = temp + "/next";
         });
         document.getElementById('prev').addEventListener('click', function() {
-            temp = window.location.href
-            if (window.location.href.includes("prev") || window.location.href.includes("next")) {
+            temp = window.location.href;
+            if (window.location.href.includes("prev") || window.location.href.includes("next") || window.location.href.includes("flip")) {
                 temp = temp.replace("/prev", "");
                 temp = temp.replace("/next", "");
+                temp = temp.replace("/flip", "");
             }
             window.location.href = temp + "/prev";
+        });
+        document.getElementById('flip').addEventListener('click', function() {
+            temp = window.location.href;
+            if (window.location.href.includes("prev") || window.location.href.includes("next") || window.location.href.includes("flip")) {
+                temp = temp.replace("/prev", "");
+                temp = temp.replace("/next", "");
+                temp = temp.replace("/flip", "");
+            }
+            window.location.href = temp + "/flip";
         });
         document.getElementsByTagName('svg')[0].setAttribute('style', 'width: 30em; height: 30em;');
     </script>
