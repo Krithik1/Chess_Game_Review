@@ -9,6 +9,8 @@
     <button id="flip">Flip</button>
     <button id="next">Next</button>
     <button id="prev">Previous</button>
+    <span id="eval">{{ eval | safe}}</span>
+    <span id="best_move">{{ best_move | safe}}</span>
     <script>
         document.getElementById('next').addEventListener('click', function() {
             temp = window.location.href;
